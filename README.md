@@ -1,0 +1,2 @@
+# simpligen
+Local video generation
