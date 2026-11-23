@@ -22,7 +22,7 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
-VERSION = "0.2.0"
+VERSION = "0.2.1"
 W, H = 1920, 1080
 FPS = 30
 FADE = 0.5

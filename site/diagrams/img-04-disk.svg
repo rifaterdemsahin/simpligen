@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 300" font-family="Helvetica, Arial, sans-serif">
+  <rect width="1100" height="300" rx="20" fill="#0F172A"/>
+  <text x="40" y="50" font-size="22" font-weight="700" fill="#F1F5F9">💾 Disk: make room before downloading image models</text>
+  <!-- 1.8 TB = 1000px; 141 GB free ≈ 78px; LM Studio 253 GB ≈ 141px -->
+  <rect x="50" y="85" width="1000" height="60" rx="10" fill="#334155"/>
+  <rect x="50" y="85" width="781" height="60" rx="10" fill="#475569"/><text x="440" y="122" text-anchor="middle" font-size="16" fill="#E2E8F0">📁 everything else</text>
+  <rect x="831" y="85" width="141" height="60" fill="#7C3AED"/><text x="901" y="122" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">🧠 LM Studio 253</text>
+  <rect x="972" y="85" width="78" height="60" rx="10" fill="#16A34A"/><text x="1011" y="122" text-anchor="middle" font-size="15" font-weight="700" fill="#fff">141 free</text>
+  <text x="40" y="195" font-size="17" fill="#FCA5A5">🗑️ Biggest LLMs you could remove:  magnum-72b-v1 (47 GB) + deepseek-coder-33b-secure (35 GB)  =  82 GB back</text>
+  <text x="40" y="235" font-size="17" fill="#86EFAC">🎨 Image models need ≈ 5–25 GB each → install 1–2: FLUX.2 Klein 4B first, Z-Image-Turbo second</text>
+  <text x="40" y="272" font-size="14" fill="#64748B">GB · 1.8 TB disk · read from this Mac on 23 Nov 2026</text>
+</svg>
