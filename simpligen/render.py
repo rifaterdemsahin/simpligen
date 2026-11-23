@@ -22,7 +22,7 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
-VERSION = "0.2.1"
+VERSION = "0.3.0"
 W, H = 1920, 1080
 FPS = 30
 FADE = 0.5
@@ -31,6 +31,9 @@ PAD = 0.6  # seconds of breathing room after narration
 KOKORO_URL = os.environ.get("KOKORO_URL", "http://localhost:8880")
 KOKORO_DEFAULT_VOICE = "af_heart"
 SVG_BOX = (840, 760)  # max size of a scene diagram, right half of the frame
+
+EMOJI_FONT = "/System/Library/Fonts/Apple Color Emoji.ttc"
+EMOJI_SIZE = 132  # drawn size in px (rendered at the font's 160px bitmap strike)
 
 FONT_CANDIDATES = [
     "/System/Library/Fonts/Supplemental/Arial Bold.ttf",
@@ -49,6 +52,8 @@ class Scene:
     accent: str = "#22D3EE"
     duration: float | None = None
     svg: str | None = None  # path to an SVG diagram, relative to the scene file
+    image: str | None = None  # background picture (e.g. AI-generated), relative to the scene file
+    emoji: str | None = None  # big emoji shown above the title
 
 
 @dataclass
@@ -94,22 +99,76 @@ def rasterize_svg(svg_path: Path, box: tuple[int, int] = SVG_BOX) -> Image.Image
     return img
 
 
+def _hex_rgb(color: str) -> tuple[int, int, int]:
+    c = color.lstrip("#")
+    return tuple(int(c[i:i + 2], 16) for i in (0, 2, 4))  # type: ignore[return-value]
+
+
+def background(scene: Scene, base_dir: Path) -> Image.Image:
+    """Solid colour, or a cover-cropped picture under a scrim that keeps text readable."""
+    if not scene.image:
+        return Image.new("RGB", (W, H), scene.bg)
+    path = base_dir / scene.image
+    if not path.exists():
+        raise FileNotFoundError(f"scene image not found: {path}")
+    pic = Image.open(path).convert("RGB")
+    scale = max(W / pic.width, H / pic.height)
+    pic = pic.resize((round(pic.width * scale), round(pic.height * scale)), Image.LANCZOS)
+    left, top = (pic.width - W) // 2, (pic.height - H) // 2
+    pic = pic.crop((left, top, left + W, top + H))
+    # left side nearly opaque (text), right side lighter (picture shows through)
+    alpha = Image.linear_gradient("L").rotate(-90).resize((W, H))  # 255 at left -> 0 at right
+    alpha = alpha.point(lambda v: int(95 + v * (230 - 95) / 255))
+    scrim = Image.new("RGB", (W, H), _hex_rgb(scene.bg))
+    return Image.composite(scrim, pic, alpha)
+
+
+def render_emoji(emoji: str, size: int = EMOJI_SIZE) -> Image.Image | None:
+    """Colour emoji as RGBA, or None when no colour-emoji font is available."""
+    if not emoji or not Path(EMOJI_FONT).exists():
+        return None
+    text = emoji.replace("\ufe0f", "")
+    font = ImageFont.truetype(EMOJI_FONT, 160)
+    box = font.getbbox(text)
+    tile = Image.new("RGBA", (box[2] + 20, box[3] + 20), (0, 0, 0, 0))
+    ImageDraw.Draw(tile).text((10, 10), text, font=font, embedded_color=True)
+    bbox = tile.getbbox()
+    if not bbox:
+        return None
+    tile = tile.crop(bbox)
+    tile.thumbnail((size * 2, size))
+    return tile
+
+
 def draw_slide(scene: Scene, index: int, total: int, out: Path,
                base_dir: Path | None = None) -> Path:
-    img = Image.new("RGB", (W, H), scene.bg)
-    d = ImageDraw.Draw(img)
+    base_dir = base_dir or Path.cwd()
+    img = background(scene, base_dir)
+    d = ImageDraw.Draw(img, "RGBA")
     d.rectangle([0, 0, 24, H], fill=scene.accent)
     has_svg = bool(scene.svg)
     if has_svg:
-        art = rasterize_svg((base_dir or Path.cwd()) / scene.svg)
-        x = W - 120 - SVG_BOX[0] + (SVG_BOX[0] - art.width) // 2
-        img.paste(art, (x, (H - art.height) // 2), art)
+        if scene.image:  # smaller diagram, lower right, on a card: the picture stays visible
+            art = rasterize_svg(base_dir / scene.svg, (500, 450))
+            x, ytop = W - 110 - art.width, H - 150 - art.height
+            d.rounded_rectangle([x - 20, ytop - 20, x + art.width + 20, ytop + art.height + 20],
+                                radius=30, fill=(*_hex_rgb(scene.bg), 170))
+        else:
+            art = rasterize_svg(base_dir / scene.svg)
+            x = W - 120 - SVG_BOX[0] + (SVG_BOX[0] - art.width) // 2
+            ytop = (H - art.height) // 2
+        img.paste(art, (x, ytop), art)
+    emoji = render_emoji(scene.emoji) if scene.emoji else None
     title_font = _font(92 if has_svg else 110)
     sub_font, small = _font(44 if has_svg else 48), _font(30)
     lh = 112 if has_svg else 130
     lines = textwrap.wrap(scene.title, width=15 if has_svg else 26) or [""]
     sub_lines = textwrap.wrap(scene.subtitle, width=34 if has_svg else 60)
-    y = H // 2 - (len(lines) * lh + len(sub_lines) * 58) // 2
+    emoji_h = emoji.height + 36 if emoji else 0
+    y = H // 2 - (emoji_h + len(lines) * lh + len(sub_lines) * 58) // 2
+    if emoji:
+        img.paste(emoji, (140, y), emoji)
+        y += emoji_h
     for line in lines:
         d.text((140, y), line, font=title_font, fill=scene.fg)
         y += lh

@@ -52,9 +52,10 @@
 <body>
 <main>
   <div class="top">
-    <span class="badge">🎬 simpligen v0.2.1</span>
+    <span class="badge">🎬 simpligen v0.3.0</span>
     <nav aria-label="Main menu">
       <a href="/">🏠 Home</a>
+      <a href="/gallery.html">🎨 AI images</a>
       <a href="/images.html" aria-current="page">🖼️ Local images</a>
       <a href="https://github.com/rifaterdemsahin/simpligen/blob/main/README.md">📘 README.md</a>
       <a href="https://github.com/rifaterdemsahin/simpligen/blob/main/docs/COSTS.md">💰 Costs</a>
@@ -64,6 +65,7 @@
   </div>
 
   <h1>🖼️ My local image generation setup</h1>
+  <p class="lede" style="margin:0 0 8px">✅ Installed 23 Nov 2026. <a href="/gallery.html">🎨 See the images it made →</a></p>
   <p class="lede">Which image model to run on this Mac, which tool runs it, and exactly what to load, all next to LM Studio and simpligen.</p>
 
   <img class="diagram" src="diagrams/img-01-flow.svg" alt="Flow: idea, then LM Studio with gemma-2-9b-it writes the prompt, mflux with FLUX.2 Klein 4B draws it, simpligen adds slides and Kokoro voice, output video. All local.">
@@ -72,13 +74,13 @@
     <div class="spec"><small>💻 Chip</small><b>Apple M1 Max</b></div>
     <div class="spec"><small>🧮 Memory</small><b>64 GB unified</b></div>
     <div class="spec"><small>🧠 LLM apps</small><b>LM Studio · Ollama</b></div>
-    <div class="spec"><small>📦 LM Studio</small><b>21 LLMs · 0 image</b></div>
+    <div class="spec"><small>🎨 Image models</small><b>FLUX.2 Klein 4B (mflux)</b></div>
     <div class="spec warn"><small>💾 Free disk</small><b>141 GB (93% full)</b></div>
   </div>
 
   <h2>✅ My option</h2>
   <div class="answer">
-    <p>🧠 <b>LM Studio stays the prompt writer.</b> It runs language models and has no built-in image generation, only community plugins.</p>
+    <p>🧠 <b>A local LLM writes the prompts.</b> LM Studio can do it, but its server asks for an API token, so this setup uses <b>gemma3:12b in Ollama</b>. LM Studio has no built-in image generation.</p>
     <p>🎨 <b>mflux draws the images.</b> It's a free command-line tool built on Apple's MLX, so it's the fastest way to run image models on this Mac and easy for scripts, Claude Code and simpligen to call.</p>
     <p>⭐ <b>The model is FLUX.2 Klein 4B (8-bit).</b> It's Apache 2.0 licensed, good at everything, and small enough to run next to an LLM and Kokoro.</p>
   </div>
@@ -88,7 +90,7 @@
     <thead><tr><th>Where</th><th>Load this</th><th>Why</th><th>Memory</th></tr></thead>
     <tbody>
       <tr><td>🧠 LM Studio</td><td><b>gemma-2-9b-it</b> (already downloaded)</td><td>Writes and refines image prompts; small and fast</td><td class="n">5.8 GB</td></tr>
-      <tr><td>🎨 mflux</td><td><b>FLUX.2 Klein 4B</b>, 8-bit</td><td>Main image model; ~15 s per 1024² image on a 32 GB Mac mini in one test</td><td class="n">~12 GB (est.)</td></tr>
+      <tr><td>🎨 mflux</td><td><b>FLUX.2 Klein 4B</b>, 8-bit</td><td>Main image model. ✅ <b>Installed</b>: 34 s average per 1344×768 image on this M1 Max</td><td class="n">9.3 GB peak (measured)</td></tr>
       <tr><td>🎨 mflux (optional)</td><td><b>Z-Image-Turbo</b>, 4- or 8-bit</td><td>Second style option; small footprint, slower (40–50 s)</td><td class="n">~10 GB (est.)</td></tr>
       <tr><td>🔊 Docker</td><td><b>Kokoro</b> (already running on :8880)</td><td>Narration for simpligen videos</td><td class="n">2.1 GB</td></tr>
       <tr><td>⛔ Don't load together</td><td>llama-3.3-70b or magnum-72b <em>plus</em> an image model</td><td>40+ GB LLMs leave too little room, and macOS starts swapping</td><td class="n bad">42–47 GB</td></tr>
@@ -122,6 +124,7 @@ mflux-generate --model schnell -q 8 --steps 2 --prompt "$PROMPT" --output scene.
   </ol>
 
   <h2>🤔 Other options</h2>
+  <p>🦙 <b>Ollama, tested 23 Nov 2026:</b> <code>x/z-image-turbo</code> downloaded (12 GB), but Ollama 0.40.16 on this Mac answered "image generation models are not currently supported". mflux stays the image engine until an Ollama update enables it.</p>
   <img class="diagram" src="diagrams/img-03-choose.svg" alt="Decision diagram: scripts and agents use mflux (pick 1); click and tweak use Draw Things (pick 2); use what I have try Ollama preview (pick 3); node graphs ComfyUI, skip for now.">
   <div class="table-wrap" style="margin-top:14px"><table>
     <thead><tr><th>Model</th><th>Licence</th><th>Use it for</th><th>On 64 GB</th></tr></thead>
@@ -145,7 +148,7 @@ mflux-generate --model schnell -q 8 --steps 2 --prompt "$PROMPT" --output scene.
   </ul>
 
   <footer>
-    🎬 simpligen v0.2.1 · Machine details read from this Mac on 23 Nov 2026 · Sources:
+    🎬 simpligen v0.3.0 · Machine details read from this Mac on 23 Nov 2026 · Sources:
     <ul>
       <li><a href="https://www.teamday.ai/blog/best-local-image-generation-models-2026">Best Local Image Generation Models (Nov 2026): Mac Tested</a></li>
       <li><a href="https://vdf.ai/blog/best-local-image-generation-models/">Best Local Image Generation Models 2026: VRAM and Mac</a></li>

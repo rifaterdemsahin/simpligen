@@ -50,9 +50,10 @@
 <body>
 <main>
   <div class="top">
-    <span class="badge">🎬 simpligen v0.2.1</span>
+    <span class="badge">🎬 simpligen v0.3.0</span>
     <nav aria-label="Main menu">
       <a href="/" aria-current="page">🏠 Home</a>
+      <a href="/gallery.html">🎨 AI images</a>
       <a href="/images.html">🖼️ Local images</a>
       <a href="https://github.com/rifaterdemsahin/simpligen/blob/main/README.md">📘 README.md</a>
       <a href="https://github.com/rifaterdemsahin/simpligen/blob/main/docs/COSTS.md">💰 Costs</a>
@@ -64,18 +65,19 @@
   <h1>🎬 simpligen <span>VideoStudio</span></h1>
   <p class="lede">Local video generation proof of concept. You write a JSON script with SVG diagrams and get a narrated 1080p MP4, rendered on your laptop with zero API cost.</p>
 
-  <video src="demo.mp4?v=0.2.1" controls preload="metadata" playsinline></video>
+  <video src="demo.mp4?v=0.3.0" controls preload="metadata" playsinline></video>
 
   <div class="credit">
-    <h3>🔊 Who generated the audio?</h3>
+    <h3>🔊 Who generated the audio and images?</h3>
     <p>The narration was generated <b>locally by Kokoro-82M</b> (open-weight TTS model by hexgrad, Apache 2.0). Voice: <code>af_heart</code>.</p>
-    <p>It runs in Docker via <a href="https://github.com/remsky/Kokoro-FastAPI">remsky/kokoro-fastapi-cpu</a> on <code>localhost:8880</code>. No cloud TTS service and no API key were used. The slides, diagrams and video were rendered by simpligen v0.2.1 with Pillow, rsvg and ffmpeg.</p>
+    <p>It runs in Docker via <a href="https://github.com/remsky/Kokoro-FastAPI">remsky/kokoro-fastapi-cpu</a> on <code>localhost:8880</code>. No cloud TTS service and no API key were used. The slides, diagrams and video were rendered by simpligen v0.3.0 with Pillow, rsvg and ffmpeg.</p>
+    <p>🎨 <b>Background images</b>: generated locally by <b>FLUX.2 Klein 4B</b> (Black Forest Labs, Apache 2.0) via mflux, from prompts written by <b>gemma3:12b</b> in Ollama. <a href="/gallery.html">See all 8 with their prompts →</a></p>
   </div>
 
   <div class="stats">
-    <div class="stat"><b>🎞️ 63.7 s</b><small>demo video, 7 scenes</small></div>
-    <div class="stat"><b>⚡ ~31 s</b><small>render, Kokoro warm (M1 Max)</small></div>
-    <div class="stat"><b>🥶 ~78 s</b><small>first render, Kokoro cold</small></div>
+    <div class="stat"><b>🎞️ 75.7 s</b><small>demo video, 8 scenes</small></div>
+    <div class="stat"><b>⚡ 44 s</b><small>video render (M1 Max)</small></div>
+    <div class="stat"><b>🎨 34 s</b><small>avg per AI image</small></div>
     <div class="stat"><b>💸 $0</b><small>per render, no API keys</small></div>
   </div>
 
@@ -90,7 +92,13 @@
     <figure><img src="diagrams/07-loop.svg" alt="Loop: demo.json to simpligen to demo.mp4 to Fly.io"><figcaption>7 · Self-made loop</figcaption></figure>
   </div>
 
-  <h2>🖼️ Next: local image generation</h2>
+  <h2>🎨 AI images in this video</h2>
+  <a class="next" href="/gallery.html">
+    <img src="diagrams/gallery-flow.svg" alt="Flow: scene text, Ollama gemma3 writes a prompt, mflux FLUX.2 Klein 4B draws it, simpligen builds the video">
+    <span><b>Gallery: 8 locally generated backgrounds, with the prompts →</b> Ollama writes each prompt from the scene, and FLUX.2 Klein 4B paints it in about 34 s on this Mac.</span>
+  </a>
+
+  <h2>🖼️ Local image generation setup</h2>
   <a class="next" href="/images.html">
     <img src="diagrams/img-01-flow.svg" alt="Flow: idea to LM Studio to mflux to simpligen to video, all local">
     <span><b>Which image model to run on this Mac, and what to load →</b> LM Studio writes the prompt, mflux with FLUX.2 Klein 4B draws it, simpligen puts it in the video.</span>
@@ -135,9 +143,9 @@ $ python3 -m simpligen examples/demo.json site/demo.mp4
   </table></div>
 
   <footer>
-    🎬 simpligen v0.2.1 · 📘 Source and docs: <a href="https://github.com/rifaterdemsahin/simpligen/blob/main/README.md">README.md</a> ·
+    🎬 simpligen v0.3.0 · 📘 Source and docs: <a href="https://github.com/rifaterdemsahin/simpligen/blob/main/README.md">README.md</a> ·
     <a href="https://github.com/rifaterdemsahin/simpligen">github.com/rifaterdemsahin/simpligen</a>.
-    The demo video, voice and diagrams were all produced locally by simpligen.
+    The demo video, voice, images and diagrams were all produced locally.
   </footer>
 </main>
 </body>

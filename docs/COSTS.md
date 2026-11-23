@@ -14,6 +14,20 @@ v0.2.0 numbers use Kokoro-82M TTS in Docker (`kokoro-fastapi-cpu`)._
 | Kokoro container | ~2.1 GB RAM while running, 5.6 GB image on disk |
 | Hosting the PoC site on Fly.io | **$0–$2.19 / month** (see below) |
 
+## v0.3.0: AI images + emojis
+
+| Metric | Value |
+|---|---|
+| Scenes | 8 (each: AI background, emoji, SVG diagram, Kokoro narration) |
+| Image model | FLUX.2 Klein 4B, 8-bit, via mflux (one-time download ~15 GB, ~7.5 min) |
+| Image time | 31–42 s per 1344×768 image, **34 s average** (M1 Max) |
+| Image peak memory | 9.3 GB |
+| Prompt writer | gemma3:12b in Ollama (already installed) |
+| Video | 75.7 s, rendered in 44 s, 5.8 MB |
+| Cost per image | **$0** (≈40 W × 34 s ≈ $0.0001 electricity) |
+
+Locally, the cost of an image is laptop time, not money.
+
 ## v0.2.0 render: Kokoro voice + SVG diagrams
 
 | Metric | Value |

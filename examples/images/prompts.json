@@ -1,0 +1,82 @@
+[
+  {
+    "scene": 1,
+    "title": "simpligen VideoStudio",
+    "prompt": "Warm, diffuse light illuminates a clean, modern home office desk. A laptop sits open, subtly glowing, amidst a few scattered, natural-toned notebooks and a ceramic coffee mug. cinematic, wide 16:9 composition, soft volumetric light, rich colour, clean minimal background, no text, no letters, no logos",
+    "llm": "gemma3:12b",
+    "llm_seconds": 14.0,
+    "model": "FLUX.2 Klein 4B (mflux, 8-bit)",
+    "image_seconds": 36.9,
+    "file": "01.png"
+  },
+  {
+    "scene": 2,
+    "title": "Write a scene file",
+    "prompt": "Soft, warm light illuminates a minimalist desk. A single, open notebook rests beside a glowing laptop displaying complex, branching code patterns. Subtle bokeh highlights dust motes. cinematic, wide 16:9 composition, soft volumetric light, rich colour, clean minimal background, no text, no letters, no logos",
+    "llm": "gemma3:12b",
+    "llm_seconds": 1.6,
+    "model": "FLUX.2 Klein 4B (mflux, 8-bit)",
+    "image_seconds": 31.7,
+    "file": "02.png"
+  },
+  {
+    "scene": 3,
+    "title": "Render locally",
+    "prompt": "Warm, diffused light illuminates a cluttered desk with a vintage computer, scattered circuit boards, and a half-finished sketch of a geometric shape. Cozy, slightly blurred. cinematic, wide 16:9 composition, soft volumetric light, rich colour, clean minimal background, no text, no letters, no logos",
+    "llm": "gemma3:12b",
+    "llm_seconds": 1.6,
+    "model": "FLUX.2 Klein 4B (mflux, 8-bit)",
+    "image_seconds": 30.8,
+    "file": "03.png"
+  },
+  {
+    "scene": 4,
+    "title": "Kokoro in Docker",
+    "prompt": "Subtle, warm glow illuminates a stylized, interconnected network of glowing blue nodes within a dark, metallic server rack. Gentle volumetric lighting. cinematic, wide 16:9 composition, soft volumetric light, rich colour, clean minimal background, no text, no letters, no logos",
+    "llm": "gemma3:12b",
+    "llm_seconds": 1.5,
+    "model": "FLUX.2 Klein 4B (mflux, 8-bit)",
+    "image_seconds": 31.8,
+    "file": "04.png"
+  },
+  {
+    "scene": 5,
+    "title": "What it costs",
+    "prompt": "Warm, soft light illuminates a slightly open laptop on a wooden desk. A single potted succulent sits nearby. Gentle bokeh highlights the scene; cozy, minimalist, and quiet. cinematic, wide 16:9 composition, soft volumetric light, rich colour, clean minimal background, no text, no letters, no logos",
+    "llm": "gemma3:12b",
+    "llm_seconds": 1.6,
+    "model": "FLUX.2 Klein 4B (mflux, 8-bit)",
+    "image_seconds": 31.8,
+    "file": "05.png"
+  },
+  {
+    "scene": 6,
+    "title": "vs HyperFrames",
+    "prompt": "A colossal chrome robot, intricately detailed, struggles against a swarm of tiny, shimmering, origami cranes, backlit by a dramatic, low-angle sunset glow. cinematic, wide 16:9 composition, soft volumetric light, rich colour, clean minimal background, no text, no letters, no logos",
+    "llm": "gemma3:12b",
+    "llm_seconds": 1.5,
+    "model": "FLUX.2 Klein 4B (mflux, 8-bit)",
+    "image_seconds": 32.1,
+    "file": "06.png"
+  },
+  {
+    "scene": 7,
+    "title": "Local AI images",
+    "prompt": "Sun-drenched cobblestone alley, overgrown with ivy and wildflowers. Warm, diffused light filters through leaves, highlighting textures of stone and petals. Soft focus, painterly style. cinematic, wide 16:9 composition, soft volumetric light, rich colour, clean minimal background, no text, no letters, no logos",
+    "llm": "gemma3:12b",
+    "llm_seconds": 1.8,
+    "model": "FLUX.2 Klein 4B (mflux, 8-bit)",
+    "image_seconds": 38.2,
+    "file": "07.png"
+  },
+  {
+    "scene": 8,
+    "title": "This video made itself",
+    "prompt": "A single, softly glowing laptop sits on a wooden desk bathed in late afternoon sunlight. Dust motes dance in the light, hinting at quiet, automated processes. cinematic, wide 16:9 composition, soft volumetric light, rich colour, clean minimal background, no text, no letters, no logos",
+    "llm": "gemma3:12b",
+    "llm_seconds": 1.9,
+    "model": "FLUX.2 Klein 4B (mflux, 8-bit)",
+    "image_seconds": 41.6,
+    "file": "08.png"
+  }
+]

@@ -123,5 +123,37 @@ class KokoroTests(unittest.TestCase):
         self.assertNotEqual(self.r.tts_engine("auto"), "kokoro")
 
 
+
+class ImageAndEmojiTests(unittest.TestCase):
+    def test_image_background_shows_through_on_right(self):
+        from PIL import Image
+        from simpligen.render import draw_slide
+        d = Path(tempfile.mkdtemp())
+        Image.new("RGB", (640, 360), (255, 255, 0)).save(d / "bg.png")
+        out = draw_slide(Scene("T", bg="#000000", image="bg.png"), 0, 1, d / "s.png", d)
+        img = Image.open(out).convert("RGB")
+        r_left, _, _ = img.getpixel((60, 300))
+        r_right, g_right, _ = img.getpixel((1880, 300))
+        self.assertLess(r_left, 80)        # scrim darkens the text side
+        self.assertGreater(r_right, 120)   # picture visible on the right
+        self.assertGreater(g_right, 120)
+
+    def test_missing_image_raises(self):
+        from simpligen.render import draw_slide
+        d = Path(tempfile.mkdtemp())
+        with self.assertRaises(FileNotFoundError):
+            draw_slide(Scene("T", image="nope.png"), 0, 1, d / "s.png", d)
+
+    def test_emoji_renders_in_colour(self):
+        from simpligen.render import EMOJI_FONT, render_emoji
+        if not Path(EMOJI_FONT).exists():
+            self.skipTest("no colour emoji font on this OS")
+        tile = render_emoji("🎬")
+        self.assertIsNotNone(tile)
+        colours = {px[:3] for px in tile.getdata() if px[3] > 200}
+        self.assertGreater(len(colours), 20)
+        self.assertIsNotNone(render_emoji("⚙️"))  # variation selector is handled
+
+
 if __name__ == "__main__":
     unittest.main()
