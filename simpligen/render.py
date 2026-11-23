@@ -22,7 +22,7 @@ from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
-VERSION = "0.3.0"
+VERSION = "0.4.0"
 W, H = 1920, 1080
 FPS = 30
 FADE = 0.5
@@ -54,6 +54,7 @@ class Scene:
     svg: str | None = None  # path to an SVG diagram, relative to the scene file
     image: str | None = None  # background picture (e.g. AI-generated), relative to the scene file
     emoji: str | None = None  # big emoji shown above the title
+    animate: str | None = None  # "intro" = animated title sequence (simpligen.animate)
 
 
 @dataclass
@@ -276,11 +277,19 @@ def render(scene_file: str | Path, output: str | Path, workdir: Path | None = No
     clips = []
     total = len(project.scenes)
     engine = tts_engine(project.tts)
+    animated_seconds = 0.0
     for i, sc in enumerate(project.scenes):
-        png = draw_slide(sc, i, total, tmp / f"s{i:03}.png", project.base_dir)
         wav = tmp / f"s{i:03}.wav"
         has_audio = synthesize(sc.narration, wav, project.voice, engine)
         secs = scene_length(sc, media_duration(wav) if has_audio else None)
+        if sc.animate == "intro":
+            from .animate import render_intro_clip
+            t_anim = time.perf_counter()
+            clips.append(render_intro_clip(sc, project.base_dir, wav if has_audio else None,
+                                           secs, tmp / f"c{i:03}.mp4", tmp))
+            animated_seconds += time.perf_counter() - t_anim
+            continue
+        png = draw_slide(sc, i, total, tmp / f"s{i:03}.png", project.base_dir)
         clips.append(render_clip(png, wav if has_audio else None, secs, tmp / f"c{i:03}.mp4"))
     listing = tmp / "list.txt"
     listing.write_text("".join(f"file '{c}'\n" for c in clips))
@@ -295,6 +304,7 @@ def render(scene_file: str | Path, output: str | Path, workdir: Path | None = No
         "video_seconds": round(media_duration(out), 2),
         "render_seconds": round(time.perf_counter() - t0, 2),
         "bytes": out.stat().st_size,
+        "intro_render_seconds": round(animated_seconds, 2),
         "tts": engine or "none",
         "voice": project.voice or (KOKORO_DEFAULT_VOICE if engine == "kokoro" else "default"),
     }

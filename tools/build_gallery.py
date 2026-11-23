@@ -36,7 +36,7 @@ def main() -> None:
         cards.append(f'''    <figure class="shot">
       <img src="gallery/{jpg.name}" alt="{html.escape(e['prompt'][:140])}" loading="lazy" width="1024" height="585">
       <figcaption>
-        <b>{emojis.get(e['title'], '')} Scene {e['scene']} · {html.escape(e['title'])}</b>
+        <b>{emojis.get(e['title'], '🎬')} Scene {e['scene']} · {html.escape(e['title'])}</b>
         <span class="meta">⏱️ {e['image_seconds']} s image · 🧠 {e['llm_seconds']} s prompt</span>
         <details><summary>📝 Prompt written by {html.escape(e['llm'])}</summary><p>{html.escape(e['prompt'])}</p></details>
       </figcaption>

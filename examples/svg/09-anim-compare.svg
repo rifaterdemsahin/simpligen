@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 760" font-family="Helvetica, Arial, sans-serif">
+  <rect x="20" y="20" width="390" height="720" rx="28" fill="#083344" fill-opacity="0.92" stroke="#22D3EE" stroke-width="4"/>
+  <rect x="430" y="20" width="390" height="720" rx="28" fill="#422006" fill-opacity="0.92" stroke="#FBBF24" stroke-width="4"/>
+  <g text-anchor="middle">
+    <text x="215" y="80" font-size="34" font-weight="800" fill="#CFFAFE">simpligen</text>
+    <text x="625" y="80" font-size="34" font-weight="800" fill="#FEF3C7">HyperFrames</text>
+    <text x="215" y="115" font-size="20" fill="#67E8F9">Python + Pillow</text>
+    <text x="625" y="115" font-size="20" fill="#FDE68A">HTML + GSAP</text>
+  </g>
+  <g font-family="Menlo, monospace" font-size="17">
+    <rect x="45" y="140" width="340" height="170" rx="12" fill="#0B1020"/>
+    <text x="60" y="172" fill="#A78BFA">for</text><text x="100" y="172" fill="#E2E8F0">i in range(frames):</text>
+    <text x="80" y="200" fill="#E2E8F0">t = i / 30</text>
+    <text x="80" y="228" fill="#E2E8F0">q = ease_out_back(</text>
+    <text x="100" y="256" fill="#E2E8F0">progress(t,.2,.9))</text>
+    <text x="80" y="284" fill="#E2E8F0">draw(...).save()</text>
+    <rect x="455" y="140" width="340" height="170" rx="12" fill="#1C1003"/>
+    <text x="470" y="172" fill="#FBBF24">tl.from(</text><text x="565" y="172" fill="#86EFAC">"#emoji"</text><text x="650" y="172" fill="#E2E8F0">,{</text>
+    <text x="490" y="200" fill="#E2E8F0">scale: 0,</text>
+    <text x="490" y="228" fill="#E2E8F0">ease: </text><text x="555" y="228" fill="#86EFAC">"back.out"</text>
+    <text x="470" y="256" fill="#E2E8F0">}, 0.2)</text>
+    <text x="470" y="284" fill="#64748B">// Chrome seeks frames</text>
+  </g>
+  <g font-size="22" text-anchor="middle">
+    <text x="215" y="370" fill="#A5F3FC">161 lines</text><text x="215" y="398" font-size="16" fill="#67E8F9">(66 for the frame drawing)</text>
+    <text x="625" y="370" fill="#FDE68A">58 lines</text><text x="625" y="398" font-size="16" fill="#FCD34D">(11 for the timeline)</text>
+    <text x="215" y="470" fill="#A5F3FC">⏱ ~50 ms / frame</text><text x="215" y="498" font-size="16" fill="#67E8F9">1080p, measured on M1 Max</text>
+    <text x="625" y="470" fill="#FDE68A">⏱ not measured</text><text x="625" y="498" font-size="16" fill="#FCD34D">CLI install not approved yet</text>
+    <text x="215" y="570" fill="#A5F3FC">no browser</text><text x="215" y="598" font-size="16" fill="#67E8F9">Pillow + ffmpeg only</text>
+    <text x="625" y="570" fill="#FDE68A">headless Chrome</text><text x="625" y="598" font-size="16" fill="#FCD34D">Node 22+ + ffmpeg</text>
+    <text x="215" y="670" fill="#CFFAFE" font-weight="700">fast + tiny</text>
+    <text x="625" y="670" fill="#FEF3C7" font-weight="700">richer motion</text>
+  </g>
+</svg>

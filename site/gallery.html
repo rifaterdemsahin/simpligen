@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>simpligen · AI images</title>
-<meta name="description" content="Images generated locally for simpligen v0.3.0: Ollama gemma3 writes prompts, FLUX.2 Klein 4B draws them via mflux.">
+<meta name="description" content="Images generated locally for simpligen v0.4.0: Ollama gemma3 writes prompts, FLUX.2 Klein 4B draws them via mflux.">
 <style>
   :root { --bg:#0b1020; --panel:#121933; --fg:#e8ecf8; --muted:#9aa6c7; --accent:#22d3ee; --accent2:#a78bfa; --warm:#fb923c; --ok:#4ade80; --line:#24305a; }
   @media (prefers-color-scheme: light) {
@@ -47,9 +47,10 @@
 <body>
 <main>
   <div class="top">
-    <span class="badge">🎬 simpligen v0.3.0</span>
+    <span class="badge">🎬 simpligen v0.4.0</span>
     <nav aria-label="Main menu">
       <a href="/">🏠 Home</a>
+      <a href="/architecture.html">🏗️ Architecture</a>
       <a href="/gallery.html" aria-current="page">🎨 AI images</a>
       <a href="/images.html">🖼️ Local images</a>
       <a href="https://github.com/rifaterdemsahin/simpligen/blob/main/README.md">📘 README.md</a>
@@ -60,7 +61,7 @@
   </div>
 
   <h1>🎨 AI images, made on this Mac</h1>
-  <p class="lede">Every background in the v0.3.0 video was generated locally. Ollama's gemma3:12b wrote each prompt from the scene text, and FLUX.2 Klein 4B painted it through mflux. No API keys, $0 per image.</p>
+  <p class="lede">Every background in the v0.4.0 video was generated locally. Ollama's gemma3:12b wrote each prompt from the scene text, and FLUX.2 Klein 4B painted it through mflux. No API keys, $0 per image.</p>
 
   <img class="diagram" src="diagrams/gallery-flow.svg" alt="Flow: scene text, then Ollama gemma3 12b writes a prompt, then mflux FLUX.2 Klein 4B renders a 1344 by 768 image, then simpligen adds emoji, title, diagram and Kokoro voice into the video.">
 
@@ -157,7 +158,7 @@ python3 tools/gen_images.py examples/demo.json examples/images   # Ollama prompt
 python3 -m simpligen examples/demo.json site/demo.mp4             # video with images, emojis, diagrams, Kokoro
 python3 tools/build_gallery.py                                    # this page</pre>
 
-  <footer>🎬 simpligen v0.3.0 · Images: FLUX.2 Klein 4B (Black Forest Labs, Apache 2.0) via mflux · Prompts: gemma3:12b via Ollama · Voice: Kokoro-82M · Generated 23 Nov 2026 on an Apple M1 Max.</footer>
+  <footer>🎬 simpligen v0.4.0 · Images: FLUX.2 Klein 4B (Black Forest Labs, Apache 2.0) via mflux · Prompts: gemma3:12b via Ollama · Voice: Kokoro-82M · Generated 23 Nov 2026 on an Apple M1 Max.</footer>
 </main>
 </body>
 </html>

@@ -50,9 +50,10 @@
 <body>
 <main>
   <div class="top">
-    <span class="badge">🎬 simpligen v0.3.0</span>
+    <span class="badge">🎬 simpligen v0.4.0</span>
     <nav aria-label="Main menu">
       <a href="/" aria-current="page">🏠 Home</a>
+      <a href="/architecture.html">🏗️ Architecture</a>
       <a href="/gallery.html">🎨 AI images</a>
       <a href="/images.html">🖼️ Local images</a>
       <a href="https://github.com/rifaterdemsahin/simpligen/blob/main/README.md">📘 README.md</a>
@@ -65,18 +66,18 @@
   <h1>🎬 simpligen <span>VideoStudio</span></h1>
   <p class="lede">Local video generation proof of concept. You write a JSON script with SVG diagrams and get a narrated 1080p MP4, rendered on your laptop with zero API cost.</p>
 
-  <video src="demo.mp4?v=0.3.0" controls preload="metadata" playsinline></video>
+  <video src="demo.mp4?v=0.4.0" controls preload="metadata" playsinline></video>
 
   <div class="credit">
     <h3>🔊 Who generated the audio and images?</h3>
     <p>The narration was generated <b>locally by Kokoro-82M</b> (open-weight TTS model by hexgrad, Apache 2.0). Voice: <code>af_heart</code>.</p>
-    <p>It runs in Docker via <a href="https://github.com/remsky/Kokoro-FastAPI">remsky/kokoro-fastapi-cpu</a> on <code>localhost:8880</code>. No cloud TTS service and no API key were used. The slides, diagrams and video were rendered by simpligen v0.3.0 with Pillow, rsvg and ffmpeg.</p>
+    <p>It runs in Docker via <a href="https://github.com/remsky/Kokoro-FastAPI">remsky/kokoro-fastapi-cpu</a> on <code>localhost:8880</code>. No cloud TTS service and no API key were used. The slides, diagrams and video were rendered by simpligen v0.4.0 with Pillow, rsvg and ffmpeg. The opening title animation is drawn frame by frame in Python.</p>
     <p>🎨 <b>Background images</b>: generated locally by <b>FLUX.2 Klein 4B</b> (Black Forest Labs, Apache 2.0) via mflux, from prompts written by <b>gemma3:12b</b> in Ollama. <a href="/gallery.html">See all 8 with their prompts →</a></p>
   </div>
 
   <div class="stats">
-    <div class="stat"><b>🎞️ 75.7 s</b><small>demo video, 8 scenes</small></div>
-    <div class="stat"><b>⚡ 44 s</b><small>video render (M1 Max)</small></div>
+    <div class="stat"><b>🎞️ 2:03</b><small>demo video, 9 scenes</small></div>
+    <div class="stat"><b>✨ ~50 ms</b><small>per animated intro frame</small></div>
     <div class="stat"><b>🎨 34 s</b><small>avg per AI image</small></div>
     <div class="stat"><b>💸 $0</b><small>per render, no API keys</small></div>
   </div>
@@ -91,6 +92,12 @@
     <figure><img src="diagrams/06-vs-hyperframes.svg" alt="Side by side: simpligen versus HyperFrames"><figcaption>6 · vs HyperFrames</figcaption></figure>
     <figure><img src="diagrams/07-loop.svg" alt="Loop: demo.json to simpligen to demo.mp4 to Fly.io"><figcaption>7 · Self-made loop</figcaption></figure>
   </div>
+
+  <h2>🏗️ Architecture</h2>
+  <a class="next" href="/architecture.html">
+    <img src="diagrams/arch-overview.svg" alt="Architecture: Ollama writes prompts, mflux paints images, Kokoro speaks, simpligen animates and encodes, all on one Mac">
+    <span><b>How Ollama, mflux, Kokoro and simpligen fit together →</b> including what each tool does, measured timings, and where HyperFrames would fit.</span>
+  </a>
 
   <h2>🎨 AI images in this video</h2>
   <a class="next" href="/gallery.html">
@@ -138,12 +145,13 @@ $ python3 -m simpligen examples/demo.json site/demo.mp4
     <tr><td>Needs</td><td>Python 3, Pillow, ffmpeg, librsvg, Docker (optional)</td><td>Node 22+, ffmpeg, Chrome</td></tr>
     <tr><td>Licence</td><td>Open (PoC)</td><td>Apache 2.0</td></tr>
     <tr><td>Paid tier</td><td>None</td><td>Studio Pro $25/mo; cloud &amp; Lambda render</td></tr>
-    <tr><td>Visual ceiling</td><td>Slides + static diagrams with fades</td><td>Anything a browser can draw</td></tr>
+    <tr><td>Animation</td><td>Python frame loop with easing (intro: 161 lines, ~50 ms/frame)</td><td>GSAP / CSS / Lottie timeline (same intro: 58 lines, 11-line timeline)</td></tr>
+    <tr><td>Visual ceiling</td><td>Slides, SVG diagrams, AI images, a scripted intro</td><td>Anything a browser can draw</td></tr>
     <tr><td>Best for</td><td>Fast, cheap narrated explainers, CI reports</td><td>Rich motion graphics, agent-built videos</td></tr>
   </table></div>
 
   <footer>
-    🎬 simpligen v0.3.0 · 📘 Source and docs: <a href="https://github.com/rifaterdemsahin/simpligen/blob/main/README.md">README.md</a> ·
+    🎬 simpligen v0.4.0 · 📘 Source and docs: <a href="https://github.com/rifaterdemsahin/simpligen/blob/main/README.md">README.md</a> ·
     <a href="https://github.com/rifaterdemsahin/simpligen">github.com/rifaterdemsahin/simpligen</a>.
     The demo video, voice, images and diagrams were all produced locally.
   </footer>

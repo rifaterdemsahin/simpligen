@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 330" font-family="Helvetica, Arial, sans-serif">
+  <defs><marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="#FDBA74"/></marker></defs>
+  <rect width="1100" height="330" rx="22" fill="#1C0A03"/>
+  <text x="40" y="48" font-size="22" font-weight="700" fill="#FFEDD5">🎨 Inside one mflux call (FLUX.2 Klein 4B, 8-bit)</text>
+  <g stroke="#FDBA74" stroke-width="3" fill="none" marker-end="url(#a)"><path d="M215 165 H250"/><path d="M455 165 H490"/><path d="M695 165 H730"/><path d="M915 165 H950"/></g>
+  <g text-anchor="middle">
+    <rect x="30" y="95" width="185" height="140" rx="14" fill="#292524" stroke="#A8A29E" stroke-width="2"/>
+    <text x="122" y="140" font-size="32">📝</text><text x="122" y="175" font-size="17" font-weight="700" fill="#FAFAF9">prompt</text><text x="122" y="198" font-size="13" fill="#D6D3D1">from gemma3</text>
+    <rect x="250" y="95" width="205" height="140" rx="14" fill="#431407" stroke="#FB923C" stroke-width="2"/>
+    <text x="352" y="140" font-size="32">🔤</text><text x="352" y="175" font-size="17" font-weight="700" fill="#FFEDD5">text encoder</text><text x="352" y="198" font-size="13" fill="#FDBA74">Qwen3-4B → embeddings</text>
+    <rect x="490" y="95" width="205" height="140" rx="14" fill="#7C2D12" stroke="#FB923C" stroke-width="3"/>
+    <text x="592" y="140" font-size="32">🌀</text><text x="592" y="175" font-size="17" font-weight="700" fill="#FFEDD5">flow transformer</text><text x="592" y="198" font-size="13" fill="#FDBA74">4B · few denoise steps</text>
+    <rect x="730" y="95" width="185" height="140" rx="14" fill="#431407" stroke="#FB923C" stroke-width="2"/>
+    <text x="822" y="140" font-size="32">🖼️</text><text x="822" y="175" font-size="17" font-weight="700" fill="#FFEDD5">VAE decoder</text><text x="822" y="198" font-size="13" fill="#FDBA74">latents → pixels</text>
+    <rect x="950" y="95" width="120" height="140" rx="14" fill="#14532D" stroke="#4ADE80" stroke-width="2"/>
+    <text x="1010" y="140" font-size="32">📁</text><text x="1010" y="175" font-size="17" font-weight="700" fill="#DCFCE7">PNG</text><text x="1010" y="198" font-size="13" fill="#86EFAC">1344×768</text>
+  </g>
+  <text x="40" y="280" font-size="15" fill="#FDBA74">⚡ MLX runs on the M1 Max GPU via unified memory: no copy between CPU and GPU · weights in ~/.cache/huggingface (≈15 GB)</text>
+  <text x="40" y="306" font-size="15" fill="#A8A29E">measured: 31–42 s per image · 9.3 GB peak memory · -q 8 quantises weights to 8-bit on load</text>
+</svg>

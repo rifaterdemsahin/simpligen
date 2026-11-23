@@ -155,5 +155,27 @@ class ImageAndEmojiTests(unittest.TestCase):
         self.assertIsNotNone(render_emoji("⚙️"))  # variation selector is handled
 
 
+
+class IntroAnimationTests(unittest.TestCase):
+    def test_frames_change_over_time_and_title_appears(self):
+        from simpligen.animate import IntroAnimator
+        d = Path(tempfile.mkdtemp())
+        a = IntroAnimator(Scene("simpligen", subtitle="sub", bg="#000000", fg="#FFFFFF"), d)
+        early, late = a.frame(0.0, 5.0), a.frame(4.0, 5.0)
+        self.assertEqual(early.size, (1920, 1080))
+        box = (150, 430, 900, 600)  # title area: empty at t=0, white text by t=4
+        bright = lambda im: sum(1 for p in im.crop(box).getdata() if sum(p) > 600)
+        self.assertEqual(bright(early), 0)
+        self.assertGreater(bright(late), 1000)
+
+    def test_easing_endpoints(self):
+        from simpligen.animate import ease_out_back, ease_out_cubic, progress
+        self.assertEqual(progress(0.5, 1, 2), 0.0)
+        self.assertEqual(progress(3, 1, 2), 1.0)
+        self.assertAlmostEqual(ease_out_cubic(1.0), 1.0)
+        self.assertAlmostEqual(ease_out_back(1.0), 1.0)
+        self.assertAlmostEqual(ease_out_back(0.0), 0.0)
+
+
 if __name__ == "__main__":
     unittest.main()

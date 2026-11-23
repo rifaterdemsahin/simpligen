@@ -1,7 +1,7 @@
 # 🎬 simpligen
-Local video generation. **v0.3.0**
+Local video generation. **v0.4.0**
 
-🌐 **Live demo:** https://simpligen-poc.fly.dev/ · 📼 **Video:** [site/demo.mp4](site/demo.mp4) · 🎨 **AI images:** https://simpligen-poc.fly.dev/gallery.html · 🖼️ **Local images guide:** https://simpligen-poc.fly.dev/images.html
+🌐 **Live demo:** https://simpligen-poc.fly.dev/ · 📼 **Video:** [site/demo.mp4](site/demo.mp4) · 🏗️ **Architecture:** https://simpligen-poc.fly.dev/architecture.html · 🎨 **AI images:** https://simpligen-poc.fly.dev/gallery.html · 🖼️ **Local images guide:** https://simpligen-poc.fly.dev/images.html
 
 **simpligen VideoStudio** turns a JSON script into a narrated 1080p MP4 on your
 own machine:
@@ -11,6 +11,7 @@ own machine:
   ([kokoro-fastapi](https://github.com/remsky/Kokoro-FastAPI)), with automatic fallback to
   macOS `say` / `espeak-ng`
 - 🎨 **AI backgrounds**: per-scene `image`, generated locally by FLUX.2 Klein 4B (mflux) from prompts written by Ollama `gemma3:12b` ([tools/gen_images.py](tools/gen_images.py))
+- ✨ **Animated intro**: `"animate": "intro"` draws a title sequence frame by frame ([simpligen/animate.py](simpligen/animate.py)); the same intro as a HyperFrames composition is in [comparisons/hyperframes-intro/](comparisons/hyperframes-intro/index.html)
 - 😀 **Emoji**: per-scene `emoji`, drawn in colour above the title
 - ⚙️ **Encode**: ffmpeg times each slide to its narration, crossfades and concatenates
 
@@ -33,7 +34,7 @@ python3 -m simpligen examples/demo.json site/demo.mp4
 Top level: `tts` (`auto` | `kokoro` | `say` | `espeak-ng` | `none`), `voice`
 (Kokoro voice such as `af_heart` or `bm_george`, or a macOS voice name).
 Scene fields: `title` (required), `subtitle`, `narration`, `svg` (path relative
-to the scene file), `image` (background picture), `emoji`, `bg`, `fg`, `accent`, `duration`. Set `KOKORO_URL` to point
+to the scene file), `image` (background picture), `emoji`, `animate` (`intro`), `bg`, `fg`, `accent`, `duration`. Set `KOKORO_URL` to point
 at another Kokoro server.
 
 Example diagrams: [examples/svg/](examples/svg/)
@@ -58,6 +59,7 @@ python3 -m unittest discover -s tests -t . -v
 - ⚔️ [simpligen vs HyperFrames](docs/HYPERFRAMES-COMPARISON.md)
 - 📐 [Design](docs/superpowers/specs/2026-11-23-simpligen-poc-design.md)
 - 🏠 [Live page source](site/index.html)
+- 🏗️ [Architecture: Ollama, mflux, Kokoro, simpligen](site/architecture.html)
 - 🖼️ [Local image generation: what to install and load](site/images.html)
 - 🎨 [AI image gallery with prompts](site/gallery.html) · [prompts.json](examples/images/prompts.json)
 

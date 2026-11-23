@@ -1,0 +1,58 @@
+<!--
+  The simpligen v0.4.0 intro, written as a HyperFrames composition for comparison.
+  Same timeline as simpligen/animate.py. Format follows the HyperFrames README
+  (data-* timing attributes + a paused GSAP timeline registered on window.__timelines).
+  NOT rendered in this repo yet: running `npx hyperframes render` needs approval to install
+  the HyperFrames CLI (Node 22+, headless Chrome).
+-->
+<div id="stage" data-composition-id="simpligen-intro" data-start="0" data-width="1920" data-height="1080">
+  <style>
+    #stage { position: relative; width: 1920px; height: 1080px; overflow: hidden; background: #0B1020;
+             font-family: Arial, Helvetica, sans-serif; color: #F9FAFB; }
+    #plate { position: absolute; inset: -6%; background: url(../../examples/images/01.png) center/cover; }
+    #scrim { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(11,16,32,.88), rgba(11,16,32,.47)); }
+    .strip { position: absolute; left: -90px; right: 0; height: 60px; background:
+             repeating-linear-gradient(90deg, rgba(249,250,251,.24) 0 46px, transparent 46px 90px) 0 10px / 100% 40px no-repeat,
+             rgba(0,0,0,.47); }
+    #top { top: 8px; } #bottom { bottom: 8px; }
+    #emoji { position: absolute; left: 150px; top: 190px; font-size: 200px; line-height: 1; }
+    #title { position: absolute; left: 150px; top: 410px; margin: 0; font-size: 150px; font-weight: 700; }
+    #title span { display: inline-block; }
+    #underline { position: absolute; left: 150px; top: 605px; height: 10px; width: 690px; border-radius: 5px;
+                 background: #22D3EE; transform-origin: left; }
+    #subtitle { position: absolute; left: 154px; top: 620px; font-size: 56px; font-weight: 700; color: #22D3EE; }
+    .icon { position: absolute; top: 760px; width: 260px; font-size: 96px; line-height: 1; }
+    .icon small { display: block; margin-top: 18px; font-size: 30px; font-weight: 700; }
+    #version { position: absolute; right: 150px; bottom: 110px; font-size: 30px; color: #22D3EE; }
+  </style>
+
+  <div id="plate" class="clip" data-start="0" data-duration="6" data-track-index="0"></div>
+  <div id="scrim"></div>
+  <div id="top" class="strip"></div><div id="bottom" class="strip"></div>
+  <div id="emoji">🎬</div>
+  <h1 id="title"><span>s</span><span>i</span><span>m</span><span>p</span><span>l</span><span>i</span><span>g</span><span>e</span><span>n</span></h1>
+  <div id="underline"></div>
+  <div id="subtitle">VideoStudio · local AI video</div>
+  <div class="icon" style="left:150px">🎨<small>AI images</small></div>
+  <div class="icon" style="left:450px">🔊<small>Kokoro voice</small></div>
+  <div class="icon" style="left:750px">🗺️<small>SVG diagrams</small></div>
+  <div class="icon" style="left:1050px">🎬<small>ffmpeg</small></div>
+  <div id="version">simpligen v0.4.0</div>
+
+  <audio data-start="0" data-duration="6" data-track-index="1" src="intro-narration.wav"></audio>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script>
+    const tl = gsap.timeline({ paused: true });
+    tl.fromTo("#plate", { x: 0, y: 0 }, { x: -115, y: -32, duration: 6, ease: "none" }, 0)   // Ken Burns pan
+      .fromTo(".strip", { backgroundPositionX: 0 }, { backgroundPositionX: 960, duration: 6, ease: "none" }, 0)
+      .from("#emoji", { scale: 0, duration: 0.7, ease: "back.out(1.7)" }, 0.2)              // emoji pop
+      .from("#title span", { opacity: 0, y: 60, duration: 0.5, ease: "power3.out", stagger: 0.06 }, 0.6)
+      .from("#subtitle", { opacity: 0, y: 20, duration: 0.7, ease: "power3.out" }, 1.6)
+      .from("#underline", { scaleX: 0, duration: 0.8, ease: "power3.out" }, 2.0)
+      .from(".icon", { scale: 0, opacity: 0, duration: 0.5, ease: "back.out(1.7)", stagger: 0.25 }, 2.4)
+      .to("#stage", { opacity: 0, duration: 0.5 }, 5.5);                                     // fade out
+    window.__timelines = window.__timelines || {};
+    window.__timelines["simpligen-intro"] = tl;
+  </script>
+</div>

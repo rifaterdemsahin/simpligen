@@ -14,6 +14,14 @@ v0.2.0 numbers use Kokoro-82M TTS in Docker (`kokoro-fastapi-cpu`)._
 | Kokoro container | ~2.1 GB RAM while running, 5.6 GB image on disk |
 | Hosting the PoC site on Fly.io | **$0–$2.19 / month** (see below) |
 
+## v0.4.0: animated intro + HyperFrames comparison scene
+
+| Metric | Value |
+|---|---|
+| Scenes | 9 (animated intro + 8 slides) |
+| Intro animation | ~50 ms per 1080p frame (180 frames in 8.6 s standalone) |
+| Video | 2:03, rendered in 95–160 s (Kokoro speed varies run to run) |
+
 ## v0.3.0: AI images + emojis
 
 | Metric | Value |
