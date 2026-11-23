@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>simpligen VideoStudio</title>
+<meta name="description" content="Local video generation proof of concept: JSON script in, narrated MP4 out, zero API cost.">
+<style>
+  :root { --bg:#0b1020; --panel:#121933; --fg:#e8ecf8; --muted:#9aa6c7; --accent:#22d3ee; --accent2:#a78bfa; --line:#24305a; }
+  @media (prefers-color-scheme: light) {
+    :root { --bg:#f6f8fc; --panel:#ffffff; --fg:#0f172a; --muted:#51607f; --accent:#0891b2; --accent2:#7c3aed; --line:#dbe2f0; }
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif; }
+  main { max-width:960px; margin:0 auto; padding:48px 16px 80px; }
+  h1 { font-size:clamp(2rem,6vw,3.2rem); line-height:1.1; margin:0 0 8px; }
+  h1 span { color:var(--accent); }
+  h2 { margin:56px 0 12px; font-size:1.5rem; }
+  .lede { color:var(--muted); font-size:1.15rem; margin:0 0 28px; }
+  video { width:100%; border-radius:14px; border:1px solid var(--line); background:#000; display:block; }
+  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin-top:20px; }
+  .stat { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px; }
+  .stat b { display:block; font-size:1.6rem; color:var(--accent); }
+  .stat small { color:var(--muted); }
+  pre { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px; overflow-x:auto; font-size:.9rem; }
+  .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:12px; }
+  table { border-collapse:collapse; width:100%; min-width:560px; background:var(--panel); }
+  th, td { text-align:left; padding:10px 14px; border-bottom:1px solid var(--line); vertical-align:top; font-size:.95rem; }
+  th { color:var(--accent2); font-weight:600; }
+  tr:last-child td { border-bottom:0; }
+  a { color:var(--accent); }
+  footer { margin-top:64px; color:var(--muted); font-size:.9rem; }
+</style>
+</head>
+<body>
+<main>
+  <h1>simpligen <span>VideoStudio</span></h1>
+  <p class="lede">Local video generation proof of concept. You write a JSON script and get a narrated 1080p MP4, rendered on your laptop with zero API cost.</p>
+
+  <video src="demo.mp4" controls preload="metadata" playsinline></video>
+
+  <div class="stats">
+    <div class="stat"><b>42.7 s</b><small>demo video length</small></div>
+    <div class="stat"><b>11.6 s</b><small>render time (M1 Max)</small></div>
+    <div class="stat"><b>3.7×</b><small>faster than real time</small></div>
+    <div class="stat"><b>$0</b><small>per render, no API keys</small></div>
+  </div>
+
+  <h2>How it works</h2>
+  <pre>{
+  "voice": "Samantha",
+  "scenes": [
+    { "title": "Hello", "subtitle": "Local video", "narration": "Hi there." }
+  ]
+}
+
+$ python3 -m simpligen scenes.json out.mp4
+# Pillow draws slides → offline TTS speaks → ffmpeg times, fades, encodes</pre>
+
+  <h2>What it costs</h2>
+  <div class="table-wrap"><table>
+    <tr><th>Item</th><th>Cost</th></tr>
+    <tr><td>Software &amp; licences</td><td>$0: Python, Pillow, ffmpeg, OS text-to-speech</td></tr>
+    <tr><td>API / per-render fees</td><td>$0, no network calls</td></tr>
+    <tr><td>Compute</td><td>~16 s of laptop time per minute of video</td></tr>
+    <tr><td>Electricity</td><td>~$0.00004 per minute of video</td></tr>
+    <tr><td>1,000 one-minute videos / month</td><td>~4.5 h laptop time, ~$0.04 electricity</td></tr>
+    <tr><td>Hosting this page on Fly.io</td><td>$0–$2.19 / month (shared-cpu-1x 256 MB, auto-stop)</td></tr>
+  </table></div>
+
+  <h2>simpligen vs HyperFrames</h2>
+  <div class="table-wrap"><table>
+    <tr><th></th><th>simpligen</th><th>HyperFrames (HeyGen)</th></tr>
+    <tr><td>Authoring</td><td>JSON scenes</td><td>HTML + CSS + JS (GSAP, Lottie, Three.js…)</td></tr>
+    <tr><td>Engine</td><td>Pillow + ffmpeg</td><td>Headless Chrome + ffmpeg</td></tr>
+    <tr><td>Voice</td><td>Offline OS TTS</td><td>Bring your own, or HeyGen models</td></tr>
+    <tr><td>Needs</td><td>Python 3, Pillow, ffmpeg</td><td>Node 22+, ffmpeg, Chrome</td></tr>
+    <tr><td>Licence</td><td>Open (PoC)</td><td>Apache 2.0</td></tr>
+    <tr><td>Paid tier</td><td>None</td><td>Studio Pro $25/mo; cloud &amp; Lambda render</td></tr>
+    <tr><td>Visual ceiling</td><td>Slides with fades</td><td>Anything a browser can draw</td></tr>
+    <tr><td>Best for</td><td>Fast, cheap narrated explainers, CI reports</td><td>Rich motion graphics, agent-built videos</td></tr>
+  </table></div>
+
+  <footer>
+    Source &amp; docs: <a href="https://github.com/rifaterdemsahin/simpligen">github.com/rifaterdemsahin/simpligen</a>
+    (<a href="https://github.com/rifaterdemsahin/simpligen/blob/main/docs/COSTS.md">costs</a>,
+    <a href="https://github.com/rifaterdemsahin/simpligen/blob/main/docs/HYPERFRAMES-COMPARISON.md">comparison</a>).
+    The demo video was generated by simpligen itself.
+  </footer>
+</main>
+</body>
+</html>
