@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 760" font-family="Helvetica, Arial, sans-serif">
+  <rect x="30" y="60" width="370" height="640" rx="26" fill="#164E63" stroke="#22D3EE" stroke-width="4"/>
+  <rect x="440" y="60" width="370" height="640" rx="26" fill="#422006" stroke="#FBBF24" stroke-width="4"/>
+  <text x="215" y="125" text-anchor="middle" font-size="36" font-weight="800" fill="#CFFAFE">simpligen</text>
+  <text x="625" y="125" text-anchor="middle" font-size="36" font-weight="800" fill="#FEF3C7">HyperFrames</text>
+  <g font-size="26" text-anchor="middle">
+    <g fill="#A5F3FC">
+      <text x="215" y="210">JSON scenes</text><text x="215" y="290">Pillow + ffmpeg</text><text x="215" y="370">Kokoro (Docker)</text><text x="215" y="450">Python 3</text><text x="215" y="530">Slides + SVG</text><text x="215" y="610">No paid tier</text>
+    </g>
+    <g fill="#FDE68A">
+      <text x="625" y="210">HTML + CSS + JS</text><text x="625" y="290">Headless Chrome</text><text x="625" y="370">BYO / HeyGen voices</text><text x="625" y="450">Node 22+</text><text x="625" y="530">Full motion graphics</text><text x="625" y="610">Pro $25 / month</text>
+    </g>
+  </g>
+  <g stroke="#475569" stroke-width="2"><line x1="70" y1="245" x2="360" y2="245"/><line x1="70" y1="325" x2="360" y2="325"/><line x1="70" y1="405" x2="360" y2="405"/><line x1="70" y1="485" x2="360" y2="485"/><line x1="70" y1="565" x2="360" y2="565"/>
+  <line x1="480" y1="245" x2="770" y2="245"/><line x1="480" y1="325" x2="770" y2="325"/><line x1="480" y1="405" x2="770" y2="405"/><line x1="480" y1="485" x2="770" y2="485"/><line x1="480" y1="565" x2="770" y2="565"/></g>
+  <circle cx="420" cy="380" r="42" fill="#1E1B4B" stroke="#E0E7FF" stroke-width="4"/>
+  <text x="420" y="393" text-anchor="middle" font-size="32" font-weight="800" fill="#E0E7FF">vs</text>
+</svg>

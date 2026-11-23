@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 760" font-family="Helvetica, Arial, sans-serif">
+  <defs><marker id="a" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="#22D3EE"/></marker></defs>
+  <circle cx="420" cy="380" r="250" fill="none" stroke="#1F2937" stroke-width="40"/>
+  <g fill="none" stroke="#22D3EE" stroke-width="10" marker-end="url(#a)">
+    <path d="M520 150 A250 250 0 0 1 660 330"/>
+    <path d="M640 520 A250 250 0 0 1 460 625"/>
+    <path d="M300 600 A250 250 0 0 1 175 420"/>
+    <path d="M200 270 A250 250 0 0 1 340 145"/>
+  </g>
+  <g font-size="28" font-weight="700" text-anchor="middle" fill="#F9FAFB">
+    <rect x="320" y="95" width="200" height="70" rx="35" fill="#0E7490"/><text x="420" y="140">demo.json</text>
+    <rect x="590" y="345" width="200" height="70" rx="35" fill="#7C2D12"/><text x="690" y="390">simpligen</text>
+    <rect x="320" y="600" width="200" height="70" rx="35" fill="#14532D"/><text x="420" y="645">demo.mp4</text>
+    <rect x="50" y="345" width="200" height="70" rx="35" fill="#3B0764"/><text x="150" y="390">Fly.io</text>
+  </g>
+  <text x="420" y="370" text-anchor="middle" font-size="40" font-weight="800" fill="#22D3EE">self-made</text>
+  <text x="420" y="415" text-anchor="middle" font-size="26" fill="#9CA3AF">this video</text>
+</svg>

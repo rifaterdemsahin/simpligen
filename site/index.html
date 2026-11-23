@@ -4,24 +4,35 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>simpligen VideoStudio</title>
-<meta name="description" content="Local video generation proof of concept: JSON script in, narrated MP4 out, zero API cost.">
+<meta name="description" content="Local video generation proof of concept: JSON script + SVG diagrams in, Kokoro-narrated MP4 out, zero API cost.">
 <style>
-  :root { --bg:#0b1020; --panel:#121933; --fg:#e8ecf8; --muted:#9aa6c7; --accent:#22d3ee; --accent2:#a78bfa; --line:#24305a; }
+  :root { --bg:#0b1020; --panel:#121933; --fg:#e8ecf8; --muted:#9aa6c7; --accent:#22d3ee; --accent2:#a78bfa; --warm:#fb923c; --line:#24305a; }
   @media (prefers-color-scheme: light) {
-    :root { --bg:#f6f8fc; --panel:#ffffff; --fg:#0f172a; --muted:#51607f; --accent:#0891b2; --accent2:#7c3aed; --line:#dbe2f0; }
+    :root { --bg:#f6f8fc; --panel:#ffffff; --fg:#0f172a; --muted:#51607f; --accent:#0891b2; --accent2:#7c3aed; --warm:#c2410c; --line:#dbe2f0; }
   }
   * { box-sizing:border-box; }
   body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, sans-serif; }
-  main { max-width:960px; margin:0 auto; padding:48px 16px 80px; }
+  main { max-width:960px; margin:0 auto; padding:40px 16px 80px; }
+  .top { display:flex; flex-wrap:wrap; gap:8px 16px; align-items:center; justify-content:space-between; margin-bottom:24px; }
+  .badge { display:inline-block; font:600 .85rem/1 ui-monospace, Menlo, monospace; padding:6px 10px; border-radius:999px; border:1px solid var(--accent); color:var(--accent); }
+  nav a { margin-left:14px; font-size:.95rem; }
+  nav a:first-child { margin-left:0; }
   h1 { font-size:clamp(2rem,6vw,3.2rem); line-height:1.1; margin:0 0 8px; }
   h1 span { color:var(--accent); }
   h2 { margin:56px 0 12px; font-size:1.5rem; }
   .lede { color:var(--muted); font-size:1.15rem; margin:0 0 28px; }
   video { width:100%; border-radius:14px; border:1px solid var(--line); background:#000; display:block; }
-  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:12px; margin-top:20px; }
+  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; margin-top:20px; }
   .stat { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px; }
-  .stat b { display:block; font-size:1.6rem; color:var(--accent); }
+  .stat b { display:block; font-size:1.5rem; color:var(--accent); }
   .stat small { color:var(--muted); }
+  .credit { margin-top:20px; background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--warm); border-radius:12px; padding:16px 18px; }
+  .credit h3 { margin:0 0 6px; font-size:1.05rem; color:var(--warm); }
+  .credit p { margin:4px 0; }
+  .gallery { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:12px; }
+  figure { margin:0; background:#111827; border:1px solid var(--line); border-radius:12px; padding:12px; }
+  figure img { width:100%; height:auto; display:block; aspect-ratio:840/760; }
+  figcaption { color:#cbd5e1; font-size:.85rem; margin-top:8px; }
   pre { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:16px; overflow-x:auto; font-size:.9rem; }
   .table-wrap { overflow-x:auto; border:1px solid var(--line); border-radius:12px; }
   table { border-collapse:collapse; width:100%; min-width:560px; background:var(--panel); }
@@ -34,58 +45,87 @@
 </head>
 <body>
 <main>
-  <h1>simpligen <span>VideoStudio</span></h1>
-  <p class="lede">Local video generation proof of concept. You write a JSON script and get a narrated 1080p MP4, rendered on your laptop with zero API cost.</p>
+  <div class="top">
+    <span class="badge">simpligen v0.2.0</span>
+    <nav>
+      <a href="https://github.com/rifaterdemsahin/simpligen/blob/main/README.md">README.md</a>
+      <a href="https://github.com/rifaterdemsahin/simpligen/blob/main/docs/COSTS.md">Costs</a>
+      <a href="https://github.com/rifaterdemsahin/simpligen/blob/main/docs/HYPERFRAMES-COMPARISON.md">vs HyperFrames</a>
+      <a href="https://github.com/rifaterdemsahin/simpligen">GitHub</a>
+    </nav>
+  </div>
 
-  <video src="demo.mp4" controls preload="metadata" playsinline></video>
+  <h1>simpligen <span>VideoStudio</span></h1>
+  <p class="lede">Local video generation proof of concept. You write a JSON script with SVG diagrams and get a narrated 1080p MP4, rendered on your laptop with zero API cost.</p>
+
+  <video src="demo.mp4?v=0.2.0" controls preload="metadata" playsinline></video>
+
+  <div class="credit">
+    <h3>Who generated the audio?</h3>
+    <p>The narration was generated <b>locally by Kokoro-82M</b> (open-weight TTS model by hexgrad, Apache 2.0). Voice: <code>af_heart</code>.</p>
+    <p>It runs in Docker via <a href="https://github.com/remsky/Kokoro-FastAPI">remsky/kokoro-fastapi-cpu</a> on <code>localhost:8880</code>. No cloud TTS service and no API key were used. The slides, diagrams and video were rendered by simpligen v0.2.0 with Pillow, rsvg and ffmpeg.</p>
+  </div>
 
   <div class="stats">
-    <div class="stat"><b>42.7 s</b><small>demo video length</small></div>
-    <div class="stat"><b>11.6 s</b><small>render time (M1 Max)</small></div>
-    <div class="stat"><b>3.7×</b><small>faster than real time</small></div>
+    <div class="stat"><b>63.7 s</b><small>demo video, 7 scenes</small></div>
+    <div class="stat"><b>~31 s</b><small>render, Kokoro warm (M1 Max)</small></div>
+    <div class="stat"><b>~78 s</b><small>first render, Kokoro cold</small></div>
     <div class="stat"><b>$0</b><small>per render, no API keys</small></div>
   </div>
 
+  <h2>Scene diagrams</h2>
+  <div class="gallery">
+    <figure><img src="diagrams/01-title.svg" alt="Film frame with play button: JSON to MP4"><figcaption>1 · JSON → MP4</figcaption></figure>
+    <figure><img src="diagrams/02-scene-file.svg" alt="A scenes.json file with tts, voice and scenes"><figcaption>2 · The scene file</figcaption></figure>
+    <figure><img src="diagrams/03-pipeline.svg" alt="Pipeline: scenes.json to Pillow and Kokoro, then ffmpeg, then demo.mp4"><figcaption>3 · Render pipeline</figcaption></figure>
+    <figure><img src="diagrams/04-kokoro-docker.svg" alt="Kokoro-82M running in a Docker container on port 8880"><figcaption>4 · Kokoro in Docker</figcaption></figure>
+    <figure><img src="diagrams/05-costs.svg" alt="Receipt showing approximately zero dollars per video"><figcaption>5 · Cost receipt</figcaption></figure>
+    <figure><img src="diagrams/06-vs-hyperframes.svg" alt="Side by side: simpligen versus HyperFrames"><figcaption>6 · vs HyperFrames</figcaption></figure>
+    <figure><img src="diagrams/07-loop.svg" alt="Loop: demo.json to simpligen to demo.mp4 to Fly.io"><figcaption>7 · Self-made loop</figcaption></figure>
+  </div>
+
   <h2>How it works</h2>
-  <pre>{
-  "voice": "Samantha",
+  <pre>$ docker compose up -d kokoro          # local TTS on :8880
+$ python3 -m simpligen examples/demo.json site/demo.mp4
+
+{
+  "tts": "kokoro", "voice": "af_heart",
   "scenes": [
-    { "title": "Hello", "subtitle": "Local video", "narration": "Hi there." }
+    { "title": "Hello", "narration": "Hi there.", "svg": "svg/diagram.svg" }
   ]
 }
-
-$ python3 -m simpligen scenes.json out.mp4
-# Pillow draws slides → offline TTS speaks → ffmpeg times, fades, encodes</pre>
+# Pillow + rsvg draw slides → Kokoro speaks → ffmpeg times, fades, encodes
+# Kokoro down? falls back to macOS say / espeak-ng automatically</pre>
 
   <h2>What it costs</h2>
   <div class="table-wrap"><table>
     <tr><th>Item</th><th>Cost</th></tr>
-    <tr><td>Software &amp; licences</td><td>$0: Python, Pillow, ffmpeg, OS text-to-speech</td></tr>
-    <tr><td>API / per-render fees</td><td>$0, no network calls</td></tr>
-    <tr><td>Compute</td><td>~16 s of laptop time per minute of video</td></tr>
-    <tr><td>Electricity</td><td>~$0.00004 per minute of video</td></tr>
-    <tr><td>1,000 one-minute videos / month</td><td>~4.5 h laptop time, ~$0.04 electricity</td></tr>
+    <tr><td>Software, licences, voice model</td><td>$0: Python, Pillow, ffmpeg, librsvg, Kokoro (Apache 2.0)</td></tr>
+    <tr><td>API / per-render fees</td><td>$0, all on localhost</td></tr>
+    <tr><td>Compute</td><td>~30 s of laptop time per minute of video (Kokoro warm)</td></tr>
+    <tr><td>Kokoro container</td><td>~2.1 GB RAM while running, 5.6 GB image on disk</td></tr>
+    <tr><td>Electricity</td><td>~$0.0001 per minute of video</td></tr>
+    <tr><td>1,000 one-minute videos / month</td><td>~8–9 h laptop time, ~$0.10 electricity</td></tr>
     <tr><td>Hosting this page on Fly.io</td><td>$0–$2.19 / month (shared-cpu-1x 256 MB, auto-stop)</td></tr>
   </table></div>
 
   <h2>simpligen vs HyperFrames</h2>
   <div class="table-wrap"><table>
     <tr><th></th><th>simpligen</th><th>HyperFrames (HeyGen)</th></tr>
-    <tr><td>Authoring</td><td>JSON scenes</td><td>HTML + CSS + JS (GSAP, Lottie, Three.js…)</td></tr>
-    <tr><td>Engine</td><td>Pillow + ffmpeg</td><td>Headless Chrome + ffmpeg</td></tr>
-    <tr><td>Voice</td><td>Offline OS TTS</td><td>Bring your own, or HeyGen models</td></tr>
-    <tr><td>Needs</td><td>Python 3, Pillow, ffmpeg</td><td>Node 22+, ffmpeg, Chrome</td></tr>
+    <tr><td>Authoring</td><td>JSON scenes + SVG diagrams</td><td>HTML + CSS + JS (GSAP, Lottie, Three.js…)</td></tr>
+    <tr><td>Engine</td><td>Pillow + rsvg + ffmpeg</td><td>Headless Chrome + ffmpeg</td></tr>
+    <tr><td>Voice</td><td>Kokoro in local Docker (falls back to OS TTS)</td><td>Bring your own, or HeyGen models</td></tr>
+    <tr><td>Needs</td><td>Python 3, Pillow, ffmpeg, librsvg, Docker (optional)</td><td>Node 22+, ffmpeg, Chrome</td></tr>
     <tr><td>Licence</td><td>Open (PoC)</td><td>Apache 2.0</td></tr>
     <tr><td>Paid tier</td><td>None</td><td>Studio Pro $25/mo; cloud &amp; Lambda render</td></tr>
-    <tr><td>Visual ceiling</td><td>Slides with fades</td><td>Anything a browser can draw</td></tr>
+    <tr><td>Visual ceiling</td><td>Slides + static diagrams with fades</td><td>Anything a browser can draw</td></tr>
     <tr><td>Best for</td><td>Fast, cheap narrated explainers, CI reports</td><td>Rich motion graphics, agent-built videos</td></tr>
   </table></div>
 
   <footer>
-    Source &amp; docs: <a href="https://github.com/rifaterdemsahin/simpligen">github.com/rifaterdemsahin/simpligen</a>
-    (<a href="https://github.com/rifaterdemsahin/simpligen/blob/main/docs/COSTS.md">costs</a>,
-    <a href="https://github.com/rifaterdemsahin/simpligen/blob/main/docs/HYPERFRAMES-COMPARISON.md">comparison</a>).
-    The demo video was generated by simpligen itself.
+    simpligen v0.2.0 · Source and docs: <a href="https://github.com/rifaterdemsahin/simpligen/blob/main/README.md">README.md</a> ·
+    <a href="https://github.com/rifaterdemsahin/simpligen">github.com/rifaterdemsahin/simpligen</a>.
+    The demo video, voice and diagrams were all produced locally by simpligen.
   </footer>
 </main>
 </body>

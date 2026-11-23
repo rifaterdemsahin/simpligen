@@ -43,13 +43,84 @@ class EndToEndTests(unittest.TestCase):
         d = Path(tempfile.mkdtemp())
         f = d / "s.json"
         f.write_text(json.dumps({"scenes": [
-            {"title": "One", "duration": 2},
+            {"title": "One", "duration": 2, "narration": ""},
             {"title": "Two", "duration": 3},
         ]}))
         stats = render(f, d / "out.mp4", workdir=d / "work")
         self.assertTrue((d / "out.mp4").exists())
         self.assertAlmostEqual(media_duration(d / "out.mp4"), 5.0, delta=0.3)
         self.assertEqual(stats["scenes"], 2)
+
+
+
+class SvgSceneTests(unittest.TestCase):
+    def test_svg_is_drawn_on_right_half(self):
+        from PIL import Image
+        from simpligen.render import draw_slide
+        d = Path(tempfile.mkdtemp())
+        (d / "box.svg").write_text(
+            '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">'
+            '<rect width="100" height="100" fill="#ff0000"/></svg>')
+        out = draw_slide(Scene("T", bg="#000000", svg="box.svg"), 0, 1, d / "s.png", d)
+        img = Image.open(out).convert("RGB")
+        self.assertEqual(img.getpixel((1920 - 120 - 420, 540)), (255, 0, 0))
+        self.assertEqual(img.getpixel((600, 100)), (0, 0, 0))
+
+    def test_missing_svg_raises(self):
+        from simpligen.render import draw_slide
+        d = Path(tempfile.mkdtemp())
+        with self.assertRaises(FileNotFoundError):
+            draw_slide(Scene("T", svg="nope.svg"), 0, 1, d / "s.png", d)
+
+
+class KokoroTests(unittest.TestCase):
+    """Fake Kokoro server: proves the OpenAI-style request and the fallback."""
+
+    def setUp(self):
+        import http.server
+        import subprocess
+        import threading
+        wav = Path(tempfile.mkdtemp()) / "t.wav"
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-f", "lavfi", "-i",
+                        "sine=d=1.2:r=24000", "-ac", "1", str(wav)], check=True)
+        payload, self.requests = wav.read_bytes(), []
+        outer = self
+
+        class H(http.server.BaseHTTPRequestHandler):
+            def log_message(self, *a): pass
+
+            def do_GET(self):
+                self.send_response(200); self.end_headers(); self.wfile.write(b'{"voices":[]}')
+
+            def do_POST(self):
+                n = int(self.headers["Content-Length"])
+                outer.requests.append(json.loads(self.rfile.read(n)))
+                self.send_response(200); self.end_headers(); self.wfile.write(payload)
+
+        self.srv = http.server.HTTPServer(("127.0.0.1", 0), H)
+        threading.Thread(target=self.srv.serve_forever, daemon=True).start()
+        import sys
+        r = sys.modules["simpligen.render"]
+        self.r, self.old = r, r.KOKORO_URL
+        r.KOKORO_URL = f"http://127.0.0.1:{self.srv.server_port}"
+
+    def tearDown(self):
+        self.srv.shutdown()
+        self.r.KOKORO_URL = self.old
+
+    def test_auto_prefers_kokoro(self):
+        self.assertEqual(self.r.tts_engine("auto"), "kokoro")
+
+    def test_synthesize_posts_voice_and_converts(self):
+        out = Path(tempfile.mkdtemp()) / "o.wav"
+        self.assertTrue(self.r.synthesize("hello", out, "bm_george", "kokoro"))
+        self.assertEqual(self.requests[0]["voice"], "bm_george")
+        self.assertEqual(self.requests[0]["input"], "hello")
+        self.assertAlmostEqual(media_duration(out), 1.2, delta=0.1)
+
+    def test_falls_back_when_kokoro_down(self):
+        self.r.KOKORO_URL = "http://127.0.0.1:9"
+        self.assertNotEqual(self.r.tts_engine("auto"), "kokoro")
 
 
 if __name__ == "__main__":

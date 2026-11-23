@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 760" font-family="Helvetica, Arial, sans-serif">
+  <path d="M150 50 H690 V690 L655 720 L620 690 L585 720 L550 690 L515 720 L480 690 L445 720 L410 690 L375 720 L340 690 L305 720 L270 690 L235 720 L200 690 L165 720 L150 705 Z" fill="#FAF5FF" stroke="#F0ABFC" stroke-width="4"/>
+  <text x="420" y="125" text-anchor="middle" font-size="36" font-weight="700" fill="#3B0764">RECEIPT · 1 min video</text>
+  <line x1="190" y1="155" x2="650" y2="155" stroke="#C084FC" stroke-width="3" stroke-dasharray="10 8"/>
+  <g font-size="30" fill="#3B0764">
+    <text x="190" y="225">API fees</text><text x="650" y="225" text-anchor="end" font-weight="700">$0.00</text>
+    <text x="190" y="290">Licences</text><text x="650" y="290" text-anchor="end" font-weight="700">$0.00</text>
+    <text x="190" y="355">Kokoro voice</text><text x="650" y="355" text-anchor="end" font-weight="700">$0.00</text>
+    <text x="190" y="420">Electricity</text><text x="650" y="420" text-anchor="end" font-weight="700">~$0.0001</text>
+    <text x="190" y="485">Laptop time</text><text x="650" y="485" text-anchor="end" font-weight="700">seconds</text>
+  </g>
+  <line x1="190" y1="525" x2="650" y2="525" stroke="#C084FC" stroke-width="3" stroke-dasharray="10 8"/>
+  <text x="190" y="595" font-size="40" font-weight="700" fill="#3B0764">TOTAL</text>
+  <text x="650" y="595" text-anchor="end" font-size="52" font-weight="800" fill="#A21CAF">≈ $0</text>
+  <text x="420" y="650" text-anchor="middle" font-size="24" fill="#7E22CE">hosting on Fly.io: $0–2.19 / month</text>
+</svg>

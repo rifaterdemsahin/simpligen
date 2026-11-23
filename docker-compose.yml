@@ -1,0 +1,8 @@
+# Local Kokoro TTS for simpligen (OpenAI-compatible API on :8880)
+services:
+  kokoro:
+    image: ghcr.io/remsky/kokoro-fastapi-cpu:latest
+    # NVIDIA GPU hosts: ghcr.io/remsky/kokoro-fastapi-gpu:latest
+    ports:
+      - "8880:8880"
+    restart: unless-stopped

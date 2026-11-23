@@ -1,18 +1,39 @@
 # simpligen VideoStudio — cost of use
 
-_Measured 2026-11-23 on an Apple M1 Max (macOS, ffmpeg 9.0.2, Python 3.15, Pillow 13)._
+_Measured 2026-11-23 on an Apple M1 Max (macOS, ffmpeg 9.0.2, Python 3.15, Pillow 13).
+v0.2.0 numbers use Kokoro-82M TTS in Docker (`kokoro-fastapi-cpu`)._
 
 ## TL;DR
 
 | Item | Cost |
 |---|---|
-| Software licences | **$0** (Python, Pillow, ffmpeg, macOS `say` — all free / bundled) |
+| Software licences | **$0** (Python, Pillow, ffmpeg, librsvg, Kokoro Apache 2.0) |
 | API / per-render fees | **$0** (no network calls, no keys) |
-| Render compute (local) | ~**16 s of laptop time per minute of video** |
-| Electricity per minute of video | ~**$0.00004** (≈30 W × 16 s at $0.30/kWh) |
+| Render compute (local) | ~**30 s per minute of video** with Kokoro (~16 s with macOS `say`) |
+| Electricity per minute of video | ~**$0.0001** (≈40 W × 30 s at $0.30/kWh) |
+| Kokoro container | ~2.1 GB RAM while running, 5.6 GB image on disk |
 | Hosting the PoC site on Fly.io | **$0–$2.19 / month** (see below) |
 
-## Measured render (the demo video in this repo)
+## v0.2.0 render: Kokoro voice + SVG diagrams
+
+| Metric | Value |
+|---|---|
+| Scenes | 7 (each with an SVG diagram) |
+| Output length | 63.7 s, 1920×1080, H.264 + AAC, 2.25 MB |
+| Render, Kokoro warm | ~30–31 s (about 2× faster than real time) |
+| Render, Kokoro cold (first request) | 78 s |
+| Kokoro container memory | 2.14 GiB |
+
+| Videos / month (1 min each) | Laptop time | Electricity (est.) | API fees |
+|---|---|---|---|
+| 10 | ~5 min | ~$0.001 | $0 |
+| 100 | ~50 min | ~$0.01 | $0 |
+| 1,000 | ~8–9 h | ~$0.10 | $0 |
+
+For comparison, cloud TTS at a typical ~$15 per million characters would cost about
+$0.015 per minute of narration (~1,000 characters). Kokoro makes that $0.
+
+## v0.1.0 render: macOS `say`, no diagrams
 
 ```
 python3 -m simpligen examples/demo.json site/demo.mp4
