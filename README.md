@@ -17,6 +17,19 @@ own machine:
 
 No API keys. No per-render cost.
 
+## 🧰 Claude Code skill: start to end
+
+The whole workflow is packaged as a project skill: [`.claude/skills/simpligen-video/`](.claude/skills/simpligen-video/SKILL.md).
+Claude Code picks it up automatically in this repo. Ask it to "make a new simpligen video" or "ship v0.5.0".
+
+| File | What it is |
+|---|---|
+| [SKILL.md](.claude/skills/simpligen-video/SKILL.md) | The pipeline (preflight → script → images → render → look → pages → ship → verify), scene schema, site rules, common mistakes |
+| [history.md](.claude/skills/simpligen-video/history.md) | How the PoC was built from v0.1 to v0.4.0: what each version added, measured numbers, and why |
+| [scripts/preflight.sh](.claude/skills/simpligen-video/scripts/preflight.sh) | Read-only check of tools, Kokoro, Ollama, mflux, model cache, disk and Fly |
+| [scripts/ship.sh](.claude/skills/simpligen-video/scripts/ship.sh) | Tests → version check → commit/tag/push → fly deploy → live verify (`--dry-run` supported) |
+| [templates/scenes.example.json](.claude/skills/simpligen-video/templates/scenes.example.json) | Starter script for a new video |
+
 ## 📦 Install
 
 ```bash
